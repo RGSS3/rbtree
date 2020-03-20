@@ -73,7 +73,7 @@ Node *makeNode(Color c, Node *l, int val, Node *r) {
         break;                                   \
     }
 
-#define B1(L, x, r)  Run(_current->c == CB, L, x, r)
+#define B1(L, x, r) Run(_current->c == CB, L, x, r)
 #define R1(L, x, r) Run(_current->c == CR, L, x, r)
 #define R2(L, x, r) Run(_current->c == CR, L, x, r)
 #define On(n, P, Q) \
@@ -152,7 +152,7 @@ void print(Node *root, int indent) {
     print(root->r, indent + 1);
 }
 
-int main() {
+int main(void) {
     Node *root = NIL;
     for (int i = 0; i < 100; ++i) {
         root = insert(root, rand() % 100);
