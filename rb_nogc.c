@@ -22,9 +22,9 @@ Node *makeNode(Node *node, Color c, Node *l, int val, Node *r) {
     return m;
 }
 
-#define Run(t, cond, L, x, R)                    \
+#define Run(cond, L, x, R)                       \
     if (_current != NIL && cond) {               \
-       t = _current;                             \
+       *pt++ = _current;                         \
        Node *save = _current;                    \
        x = _current->val;                        \
        {                                         \
@@ -39,11 +39,12 @@ Node *makeNode(Node *node, Color c, Node *l, int val, Node *r) {
         break;                                   \
     }
 
-#define B1(t, L, x, r) Run(t, _current->c == CB, L, x, r)
-#define R1(t, L, x, r) Run(t, _current->c == CR, L, x, r)
-#define R2(t, L, x, r) Run(t, _current->c == CR, L, x, r)
+#define B1(L, x, r) Run(_current->c == CB, L, x, r)
+#define R1(L, x, r) Run(_current->c == CR, L, x, r)
+#define R2(L, x, r) Run(_current->c == CR, L, x, r)
 #define On(n, P, Q) \
     do {                   \
+       pt = t;             \
        bool match = true;  \
        Node *_current = n; \
        do {                \
@@ -56,17 +57,17 @@ Node *makeNode(Node *node, Color c, Node *l, int val, Node *r) {
 #define PURE(a) a = _current;
 
 Node *balance(Node *n) {
-    typeof(Node *) a, b, c, d, t1, t2, t3;
+    typeof(Node *) a, b, c, d, t[3], *pt = t;
     int x, y, z;
 #define A PURE(a)
 #define B PURE(b)
 #define C PURE(c)
 #define D PURE(d)
-#define RET return makeNode(t1, CR, makeNode(t2, CB, a, x, b), y, makeNode(t3, CB, c, z, d))
-    On(n, B1(t1, R1(t2, R2(t3, A, x, B), y, C), z, D), RET);
-    On(n, B1(t1, R1(t2, A, x, R2(t3, B, y, C)), z, D), RET);
-    On(n, B1(t1, A, x, R1(t2, R2(t3, B, y, C), z, D)), RET);
-    On(n, B1(t1, A, x, R1(t2, B, y, R2(t3, C, z, D))), RET);
+#define RET return makeNode(t[0], CR, makeNode(t[1], CB, a, x, b), y, makeNode(t[2], CB, c, z, d))
+    On(n, B1(R1(R2(A, x, B), y, C), z, D), RET);
+    On(n, B1(R1(A, x, R2(B, y, C)), z, D), RET);
+    On(n, B1(A, x, R1(R2(B, y, C), z, D)), RET);
+    On(n, B1(A, x, R1(B, y, R2(C, z, D))), RET);
 #undef RET
 #undef D
 #undef C
