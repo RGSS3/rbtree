@@ -144,6 +144,7 @@ Node *insert(Node *root, int x) {
 
 void print(Node *root, int indent) {
     if (root == NIL) {
+        printf("%*sNIL\n", indent, "");
         return;
     }
     printf("%*s%d%c\n", indent, "", root->val, root->c == CB ? 'B' : 'R');
