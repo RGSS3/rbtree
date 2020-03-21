@@ -63,9 +63,9 @@ Node *makeNode(Color c, Node *l, int val, Node *r) {
        x = _current->val;                        \
        {                                         \
             _current = save->l;                  \
-            L;                                   \
+            L                                    \
             _current = save->r;                  \
-            R;                                   \
+            R                                    \
             _current = save;                     \
        }                                         \
     } else {                                     \
@@ -81,10 +81,10 @@ Node *makeNode(Color c, Node *l, int val, Node *r) {
        bool match = true;  \
        Node *_current = n; \
        do {                \
-           P;              \
+           P               \
        } while (0);        \
        if (match) {        \
-           Q;              \
+           Q               \
        }                   \
     } while(0);
 #define PURE(a) a = _current;
@@ -96,11 +96,11 @@ Node *balance(Node *n) {
 #define B PURE(b)
 #define C PURE(c)
 #define D PURE(d)
-#define RET return makeNode(CR, makeNode(CB, a, x, b), y, makeNode(CB, c, z, d))
-    On(n, B1(R1(R2(A, x, B), y, C), z, D), RET);
-    On(n, B1(R1(A, x, R2(B, y, C)), z, D), RET);
-    On(n, B1(A, x, R1(R2(B, y, C), z, D)), RET);
-    On(n, B1(A, x, R1(B, y, R2(C, z, D))), RET);
+#define RET return makeNode(CR, makeNode(CB, a, x, b), y, makeNode(CB, c, z, d));
+    On(n, B1(R1(R2(A, x, B), y, C), z, D), RET)
+    On(n, B1(R1(A, x, R2(B, y, C)), z, D), RET)
+    On(n, B1(A, x, R1(R2(B, y, C), z, D)), RET)
+    On(n, B1(A, x, R1(B, y, R2(C, z, D))), RET)
 #undef RET
 #undef D
 #undef C
